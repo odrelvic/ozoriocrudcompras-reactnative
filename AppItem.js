@@ -1,35 +1,58 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import { Feather as Icon } from '@expo/vector-icons';
 import Database from './Database';
 
-export default function AppItem(props){
+export default function AppItem(props) {
+
+    async function handleEditPress() {
+        const item = await Database.getItem(props.id);
+        props.navigation.navigate("AppForm", item);
+    }
+
+    function handleDeletePress() {
+        Alert.alert(
+            "Atenção",
+            "Você tem certeza absoluta, absoluta MESMO que deseja excluir este item?",
+            [
+                {
+                    text: "Não",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                {
+                    text: "Sim. Tenho.", onPress: () => {
+                        Database.deleteItem(props.id)
+                            .then(response => props.navigation.navigate("AppList", { id: props.id }));
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+
     return (
         <View style={styles.container}>
-          <Text style={styles.textItem}>{props.item}</Text>
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.deleteButton} > 
-                <Text style={styles.buttonText}>X</Text> 
-            </TouchableOpacity> 
-            <TouchableOpacity style={styles.editButton} 
-   
-                onPress={handleEditPress}>
-                <Text style={styles.buttonText}>Editar</Text> 
-            </TouchableOpacity> 
-          </View>
+            <Text style={styles.textItem}>{props.item}</Text>
+            <View style={styles.buttonsContainer}>
+                <TouchableOpacity style={styles.deleteButton} onPress={handleDeletePress} >
+                    <Icon name="trash" color="white" size={18} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.editButton}
+                    onPress={handleEditPress}>
+                    <Icon name="edit" color="white" size={18} />
+                </TouchableOpacity>
+            </View>
         </View>
-      );
-}
-
-async function handleEditPress(){ 
-    const item = await Database.getItem(props.id);
-    props.navigation.navigate("AppForm", item);
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#fff',
-      marginTop: 20,
-      width: '100%'
+        backgroundColor: '#fff',
+        marginTop: 20,
+        width: '100%'
     },
     buttonsContainer: {
         flexDirection: 'row-reverse',
@@ -71,4 +94,4 @@ const styles = StyleSheet.create({
     textItem: {
         fontSize: 20,
     }
-  });
+});
