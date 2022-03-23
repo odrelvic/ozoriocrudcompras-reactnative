@@ -1,3 +1,6 @@
+# PDF do tutorial:
+https://github.com/odrelvic/pdf-crud
+O tutorial é dividido em 4 partes.
 # Como abrir
 ## É necessário ter o Node.js e EXPO instalado. Instale o EXPO usando o comando:
 ```
@@ -14,3 +17,10 @@ npm start
 
 ```
 Faça o Scan do QR code do EXPO.
+
+Agradecimentos especiais para:
+
+Profº Atila
+LuizTools
+
+
