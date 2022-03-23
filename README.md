@@ -20,7 +20,7 @@ Faça o Scan do QR code do EXPO.
 
 Agradecimentos especiais para:
 
-Profº Atila
-LuizTools
+###Profº Atila
+###LuizTools
 
 
